@@ -1,0 +1,28 @@
+﻿@page
+<div class="container">
+    <div class="row">
+        <div class="col-6">&nbsp;</div>
+        <div class="col-6">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/jquery-2.1.1.js"></script>
+<script src="~/signalR/signalr.js"></script>
+<script src="~/lib/jquery/jquery.signalR-2.2.2.js"></script>
+<script type="text/javascript">
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/push")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.start()
+        .catch(err => console.error(err.toString()));
+
+    connection.on("SendMessageOut", (message) => {
+        const li = document.createElement("li");
+        li.textContent = message;
+        document.getElementById("messagesList").appendChild(li);
+        console.log(message);
+    });
+</script>
