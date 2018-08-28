@@ -12,9 +12,9 @@ namespace SignalR.Controller
     [ApiController]
     public class PushController : ControllerBase
     {
-        private readonly IHubContext<MyPushService> _hubContext;
+        private readonly IHubContext<MyPushHub> _hubContext;
 
-        public PushController(IHubContext<MyPushService> hubContext)
+        public PushController(IHubContext<MyPushHub> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -22,7 +22,7 @@ namespace SignalR.Controller
         [HttpGet]
         public async Task<ActionResult> Push(string message)
         {
-            await _hubContext.Clients.All.SendAsync("SendMessageOut", message);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
 
             return Ok();
         }

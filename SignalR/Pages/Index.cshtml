@@ -3,6 +3,10 @@
     <div class="row">
         <div class="col-6">&nbsp;</div>
         <div class="col-6">
+            Message...<input type="text" id="messageInput" />
+            <input type="button" id="sendButton" value="Send Message" />
+        </div>
+        <div class="col-6">
             <ul id="messagesList"></ul>
         </div>
     </div>
@@ -19,10 +23,18 @@
     connection.start()
         .catch(err => console.error(err.toString()));
 
-    connection.on("SendMessageOut", (message) => {
+    connection.on("ReceiveMessage", (message) => {
         const li = document.createElement("li");
         li.textContent = message;
         document.getElementById("messagesList").appendChild(li);
         console.log(message);
+    });
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var message = document.getElementById("messageInput").value;
+        connection.invoke("SendMessageToCaller", message).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
     });
 </script>

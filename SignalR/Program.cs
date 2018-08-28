@@ -21,7 +21,5 @@ namespace SignalR
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
-
-        public static string Name => "hello my name";
     }
 }

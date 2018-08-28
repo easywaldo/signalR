@@ -28,7 +28,8 @@ namespace SignalR
 
             services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //services.AddSingleton(typeof(MyPushService), typeof(MyPushService));
+
+            services.AddSingleton(typeof(MyPushHub), typeof(MyPushHub));
 
             //services.AddCors(options => options.AddPolicy("CorsPolicy",
             //builder =>
@@ -58,7 +59,7 @@ namespace SignalR
 
             app.UseSignalR(r =>
             {
-                r.MapHub<MyPushService>("/push");
+                r.MapHub<MyPushHub>("/push");
             });
 
             app.UseMvc();
